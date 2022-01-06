@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    @*Custom Imports*@
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="~/css/swiper.min.css" rel="stylesheet" />
+    <link href="~/lib/animate.css/animate.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="webBackground">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+
+                <a class="navbar-brand text-info" style="cursor:pointer" asp-area="User" asp-controller="Home" asp-action="Index">
+                    <label class="text-info" style="cursor: pointer; font-family: Lemonada;">
+                        الخبير الطبي
+                    </label>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
+
+                    <ul class="navbar-nav flex-grow-1 Lemonada">
+
+                        @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Manager))
+                            {
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ادارة المحتوي
+                                    </a>
+                                    <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item text-secondary" asp-area="Admin" asp-controller="Categories" asp-action="Index">الاقسام</a>
+                                        <a class="dropdown-item text-secondary" asp-area="Admin" asp-controller="Diseases" asp-action="Index">الامراض</a>
+                                        <a class="dropdown-item text-secondary" asp-area="Admin" asp-controller="Sides" asp-action="Index">الاعراض</a>
+                                        <a class="dropdown-item text-secondary" asp-area="Admin" asp-controller="Users" asp-action="Index">المستخدمين</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ادارة الدواء
+                                    </a>
+                                    <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item text-secondary" asp-area="Admin" asp-controller="Medicines" asp-action="Index">الدواء</a>
+                                        <a class="dropdown-item text-secondary" asp-area="Admin" asp-controller="MedicineGenres" asp-action="Index">نوع الدواء</a>
+                                        <a class="dropdown-item text-secondary" asp-area="Admin" asp-controller="MedicineForms" asp-action="Index">شكل الدواء</a>
+                                    </div>
+                                </li>
+
+                            }
+
+                        <li style="color:white">
+                            <a class="nav-link" asp-area="User" asp-controller="Advices" asp-action="Index" style="text-decoration:none">
+                                نصائح
+                            </a>
+                        </li>
+
+                        <li style="color:white">
+                            <a class="nav-link" asp-area="User" asp-controller="Diagnosis" asp-action="Index" style="text-decoration:none">
+                                تشخيص
+                            </a>
+                        </li>
+
+                        <li style="color:white">
+                            <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="AboutUs" style="text-decoration:none">
+                                من نحن
+                            </a>
+                        </li>
+
+                        <li style="color:white">
+                            <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="ContactUs" style="text-decoration:none">
+                                تواصل معنا
+                            </a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer bg-dark text-white-50">
+        <div class="container">
+            <p class="text-center Lemonada">&copy;حقوق النشر &nbsp; 2018 - 2019 &nbsp; جميع الحقوق محفوظة لـ &nbsp; <a href="https://www.linkedin.com/in/ali-nasser-68aa4520a/" class="text-white-50" style="font-family: 'Great Vibes'; ">&reg;&Agrave;liEn</a></p>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @*Custom Imports*@
+    <script src="~/js/swiper.min.js"></script>
+    <script src="~/lib/bootbox.js/bootbox.min.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+</body>
+</html>

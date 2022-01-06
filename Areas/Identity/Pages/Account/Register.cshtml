@@ -1,0 +1,116 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "التسجيل";
+}
+
+<br />
+<h2 class="text-info text-right">انشاء حساب جديد</h2>
+<br />
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div class="whiteBackground border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row form-group">
+            <div class="col-12 col-lg-3">
+                <label asp-for="Input.FirstName" class="col-form-label"></label>
+            </div>
+            <div class="col-12 col-lg-9 col-xl-7 text-right">
+                <input asp-for="Input.FirstName" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-12 col-lg-3">
+                <label asp-for="Input.LastName" class="col-form-label"></label>
+            </div>
+            <div class="col-12 col-lg-9 col-xl-7 text-right">
+                <input asp-for="Input.LastName" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-12 col-lg-3">
+                <label asp-for="Input.Email" class="col-form-label"></label>
+            </div>
+            <div class="col-12 col-lg-9 col-xl-7 text-right">
+                <input asp-for="Input.Email" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-12 col-lg-3">
+                <label asp-for="Input.PhoneNumber" class="col-form-label"></label>
+            </div>
+            <div class="col-12 col-lg-9 col-xl-7 text-right">
+                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-12 col-lg-3">
+                <label asp-for="Input.Age" class="col-form-label"></label>
+            </div>
+            <div class="col-12 col-lg-9 col-xl-7 text-right">
+                <input asp-for="Input.Age" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.Age" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-12 col-lg-3">
+                <label asp-for="Input.Password" class="col-form-label"></label>
+            </div>
+            <div class="col-12 col-lg-9 col-xl-7 text-right">
+                <input asp-for="Input.Password" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-12 col-lg-3">
+                <label asp-for="Input.ConfirmPassword" class="col-form-label"></label>
+            </div>
+            <div class="col-12 col-lg-9 col-xl-7 text-right">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+
+        @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Manager))
+        {
+            <div class="row form-group text-right">
+                <div class="col-12 col-lg-3">
+
+                </div>
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <label class="form-check-label">
+                        <input type="radio" value="@Roles.Doctor" name="rdUserRole" checked />دكتور
+                    </label>
+                    @if (User.IsInRole(Roles.Admin))
+                    {
+                        <label class="form-check-label">
+                            <input type="radio" value="@Roles.Manager" name="rdUserRole" />مدير
+                        </label>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="row form-group" style="direction: ltr;">
+            <div class="col-12 offset-lg-2 col-lg-9 col-xl-7">
+                <button type="submit" class="btn btn-primary form-control">تسجيل</button>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,80 @@
+﻿@model DiagnosisDefineSidesViewModel
+
+@{
+    ViewData["Title"] = "تحديد الاعراض";
+}
+
+<div class="container whiteBackground mt-5">
+    <h1 style="font-family: Lemonada;" class="text-primary text-right mb-5">
+        تحديد الاعراض ( @Model.Category.Name )
+    </h1>
+
+    <p style="font-family: Lemonada;" class="text-right mt-4">
+        قم بتحديد الاعراض التي تظهر عليك.
+    </p>
+    @if (!Model.SidesCheckBoxes.Any())
+    {
+        <div class="text-right alert alert-warning mt-4 Lemonada" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            عذرا لا يوجد اعراض في القائمة!
+        </div>
+
+        <div class="row form-group" style="direction: rtl;">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-3">
+                        <a asp-action="Index" class="btn btn-success form-control Lemonada">رجوع</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <form asp-action="DefineSides" method="post" enctype="multipart/form-data">
+
+            <div class="row">
+                <div class="col-9">
+                    <div class="row form-group">
+                        <div class="col-12 text-right">
+                            @for (int i = 0; i < Model.SidesCheckBoxes.Count; i++)
+                            {
+                                <div class="form-check m-1">
+                                    <input type="hidden" asp-for="@Model.SidesCheckBoxes[i].Id" />
+                                    <input type="hidden" asp-for="@Model.SidesCheckBoxes[i].Name" />
+                                    <input asp-for="@Model.SidesCheckBoxes[i].IsSelected" class="form-check-input" />
+                                    <label class="mr-4 Lemonada fst-italic">
+                                        @Model.SidesCheckBoxes[i].Name
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                        <span asp-validation-for="SidesCheckBoxes" class="text-right text-danger"></span>
+                    </div>
+
+                    <input type="hidden" asp-for="CategoryId" />
+
+                    <div class="row form-group" style="direction: rtl;">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-3">
+                                    <input type="submit" class="btn btn-primary form-control Lemonada" value="معرفة المرض" />
+                                </div>
+                                <div class="col-3">
+                                    <a asp-action="Index" class="btn btn-success form-control Lemonada">رجوع</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <img src="@($"data:image/*;base64,{Convert.ToBase64String(Model.Category.Picture)}")" alt="Category Picture" class="img-thumbnail" />
+                </div>
+            </div>
+        </form>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

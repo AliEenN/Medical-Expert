@@ -1,0 +1,105 @@
+﻿@model AdviceViewModel
+
+@{
+    ViewData["Title"] = "نموذج النصيحة";
+}
+
+<h1 class="text-primary text-right mt-4 Lemonada">
+    @(Model.Id > 0 ? "تعديل" : "انشاء") نصيحة
+</h1>
+
+<div class="whiteBackground container border mt-4">
+    <form asp-action="@(Model.Id > 0 ? "Edit" : "Create")" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @if (Model.Id > 0)
+        {
+            @Html.HiddenFor(e => e.Id)
+        }
+
+        <div class="row">
+            <div class="col-12 col-xl-9">
+                <div class="row form-group mt-4">
+                    <div class="col-12 col-lg-3">
+                        <label asp-for="Title" class="col-form-label Lemonada text-primary"></label>
+                    </div>
+                    <div class="col-12 col-lg-9 col-xl-7 text-right">
+                        <input asp-for="Title" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-12 col-lg-3">
+                        <label asp-for="Description" class="col-form-label Lemonada text-primary"></label>
+                    </div>
+                    <div class="col-12 col-lg-9 col-xl-7 text-right">
+                        <input asp-for="Description" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-12 col-lg-3">
+                        <label asp-for="Picture" class="col-form-label Lemonada text-primary"></label>
+                    </div>
+                    <div class="col-12 col-lg-9 col-xl-7">
+                        <input id="pic" asp-for="Picture" class="form-control" type="file" accept="image/*" />
+                        <span asp-validation-for="Picture" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group" style="direction: ltr;">
+                    <div class="col-12 offset-2 col-lg-9 col-xl-7">
+                        @if (Model.Id > 0)
+                        {
+                            <div class="row">
+                                <div class="col-6">
+                                    <a asp-action="Index" class="btn btn-success form-control">رجوع</a>
+                                </div>
+                                <div class="col-6">
+                                    <input type="submit" class="btn btn-primary form-control" value="@(Model.Id > 0 ? "تعديل" : "انشاء")" />
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-6">
+                                    <a asp-action="Index" class="btn btn-success form-control Lemonada">رجوع</a>
+                                </div>
+                                <div class="col-6">
+                                    <input type="submit" class="btn btn-primary form-control Lemonada" value="انشاء" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-3">
+                <div id="pic-container" class="@(Model.Id > 0 ? string.Empty : "d-none")">
+                    <img src="@(Model.Id > 0 ? $"data:image/*;base64,{Convert.ToBase64String(Model.Picture)}" : string.Empty)" alt="Poster" class="img-thumbnail" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+            $('#pic').on('change', function () {
+                var selectedFile = $(this).val().split('\\').pop();
+                $(this).siblings('label').text(selectedFile);
+
+                var posterContainer = $('#pic-container');
+                var image = window.URL.createObjectURL(this.files[0]);
+
+                posterContainer.removeClass('d-none');
+                posterContainer.find('img').attr('src', image);
+            });
+        });
+    </script>
+}

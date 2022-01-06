@@ -1,0 +1,99 @@
+﻿@model CategoryViewModel
+
+@{
+    ViewData["Title"] = "تفاصيل القسم";
+}
+
+<h1 class="text-primary text-right mt-4 Lemonada">
+    تفاصيل القسم
+</h1>
+
+<div class="whiteBackground container border mt-4">
+    <div class="row">
+        <div class="col-12 col-xl-9">
+            <div class="row form-group mt-4">
+                <div class="col-12 col-lg-3">
+                    <label asp-for="Name" class="col-form-label Lemonada text-primary"></label>
+                </div>
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <input disabled asp-for="Name" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-12 col-lg-3">
+                    <label class="col-form-label Lemonada text-primary">الامراض التابعة للقسم</label>
+                </div>
+                <div class="col-12 col-lg-9 col-xl-7 text-right">
+                    @if (Model.Diseases != null)
+                    {
+                        @for (int i = 0; i < Model.Diseases.Count; i++)
+                        {
+                            <label class="mr-4">@Model.Diseases[i].Name</label>
+                        }
+                    }
+                    else
+                    {
+                        <p class="Lemonada text-primary">لا يوجد تحت هذا القسم اي امراض!</p>
+                    }
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-12 col-lg-3">
+                    <label class="col-form-label Lemonada text-primary">الاعراض التابعة للقسم</label>
+                </div>
+                <div class="col-12 col-lg-9 col-xl-7 text-right">
+                    @if (Model.Sides != null)
+                    {
+                        @for (int i = 0; i < Model.Sides.Count; i++)
+                        {
+                            <label class="mr-4">@Model.Sides[i].Name</label>
+                        }
+                    }
+                    else
+                    {
+                        <p class=" Lemonada text-primary">لا يوجد تحت هذا القسم اي اعراض!</p>
+                    }
+                </div>
+            </div>
+
+            <div class="row form-group" style="direction: ltr;">
+                <div class="col-12 offset-2 col-lg-9 col-xl-7">
+                    <div class="row">
+                        <div class="col-6">
+                            <a asp-action="Index" class="btn btn-success form-control Lemonada">رجوع</a>
+                        </div>
+                        <div class="col-6">
+                            <a asp-action="Edit" class="btn btn-primary form-control Lemonada" asp-route-id="@Model.Id">تعديل</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-xl-3">
+            <div id="pic-container" class="@(Model.Id > 0 ? string.Empty : "d-none")">
+                <img src="@(Model.Id > 0 ? $"data:image/*;base64,{Convert.ToBase64String(Model.Picture)}" : string.Empty)" alt="Poster" class="img-thumbnail" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+            $('#pic').on('change', function () {
+                var selectedFile = $(this).val().split('\\').pop();
+                $(this).siblings('label').text(selectedFile);
+
+                var posterContainer = $('#pic-container');
+                var image = window.URL.createObjectURL(this.files[0]);
+
+                posterContainer.removeClass('d-none');
+                posterContainer.find('img').attr('src', image);
+            });
+        });
+    </script>
+}

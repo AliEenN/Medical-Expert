@@ -1,0 +1,50 @@
+﻿@model MedicineGenreViewModel
+
+@{
+    ViewData["Title"] = "نموذج نوع دواء";
+}
+
+<h1 class="text-primary text-right mt-4 Lemonada">
+    @(Model.Id > 0 ? "تعديل" : "انشاء") نوع علاج
+</h1>
+
+<div class="whiteBackground container border mt-4">
+    <form asp-action="@(Model.Id > 0 ? "Edit" : "Create")" method="post">
+
+        @if (Model.Id > 0)
+        {
+            @Html.HiddenFor(e => e.Id)
+        }
+
+        <div class="row">
+            <div class="col-12 col-xl-9">
+                <div class="row form-group mt-4">
+                    <div class="col-12 col-lg-3">
+                        <label asp-for="Name" class="col-form-label Lemonada text-primary"></label>
+                    </div>
+                    <div class="col-12 col-lg-9 col-xl-7 text-right">
+                        <input asp-for="Name" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row form-group" style="direction: ltr;">
+                    <div class="col-12 offset-2 col-lg-9 col-xl-7">
+                        <div class="row">
+                            <div class="col-6">
+                                <a asp-action="Index" class="btn btn-success form-control Lemonada">رجوع</a>
+                            </div>
+                            <div class="col-6">
+                                <input type="submit" class="btn btn-primary form-control Lemonada" value="@(Model.Id > 0 ? "تعديل" : "انشاء")" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

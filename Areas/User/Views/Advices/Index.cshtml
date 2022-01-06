@@ -1,0 +1,110 @@
+﻿@model IEnumerable<AdviceViewModel>
+
+@{
+    ViewData["Title"] = "نصائح";
+}
+
+<div class="container whiteBackground mt-5">
+    <h1 style="font-family: Lemonada;" class="text-primary text-right mb-5">
+        النصائح
+    </h1>
+
+    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Manager) || User.IsInRole(Roles.Doctor))
+    {
+        <div class="col-12 col-md-3 text-md-right mt-3 Lemonada">
+            <a class="btn btn-primary" asp-action="Create">انشاء نصيحة جديدة</a>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="text-right alert alert-warning mt-4" role="alert">
+            <i class="bi bi-exclamation-triangle Lemonada"></i>
+            لا يوجد نصائح في القائمة
+        </div>
+    }
+    else
+    {
+        @foreach (var advice in Model)
+        {
+            <div class="deleted text-right border border-info col-12" style="margin-top:10px;margin-bottom:10px;padding:10px; direction:rtl">
+                <div class="row">
+                    <div class="col-12 col-md-9">
+                        <label class="text-primary Lemonada" style="font-size:21px;">
+                            @advice.Title
+                        </label>
+                    </div>
+
+                    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Manager) || User.IsInRole(Roles.Doctor))
+                    {
+                        <div class="col-12 col-md-3 text-left" dir="ltr">
+                            <div class="btn-group" role="group">
+                                <a href="javascript:;" class="btn btn-danger text-white js-delete" data-id="@advice.Id">
+                                    <i class="bi bi-trash-fill"></i>
+                                </a>
+                                <a asp-action="Edit" class="btn btn-primary text-white" asp-route-id="@advice.Id">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </a>
+                                <a asp-action="Details" class="btn btn-success text-white" asp-route-id="@advice.Id">
+                                    <i class="bi bi-list-ul"></i>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-12 col-md-3">
+                            <a asp-action="Details" class="btn btn-success form-control" asp-route-id="@advice.Id">Details</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+            $('.js-delete').on('click', function () {
+                var btn = $(this);
+
+                bootbox.confirm({
+                    message: "هل تود حذف هذة النصيحة؟",
+                    buttons: {
+                        confirm: {
+                            label: 'نعم',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'لا',
+                            className: 'btn-outline-secondary'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: '/user/advices/delete/' + btn.data('id'),
+                                success: function () {
+                                    var adviceContainer = btn.parents('.deleted');
+                                    adviceContainer.addClass('animate__animated animate__zoomOut');
+
+                                    setTimeout(function () {
+                                        adviceContainer.remove();
+                                    }, 1000);
+
+                                    toastr.success('تم حذف النصيحة بنجاح.');
+                                },
+                                error: function () {
+                                    toastr.error('حدث خطأ ما!');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

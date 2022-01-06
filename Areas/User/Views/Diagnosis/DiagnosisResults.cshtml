@@ -1,0 +1,92 @@
+﻿@model DiseasAndMedicineViewModel
+
+@{
+    ViewData["Title"] = "نتيجة التشخيص";
+}
+
+<div class="container whiteBackground mt-5">
+
+    <h1 style="font-family: Lemonada;" class="text-primary text-right mb-5">
+        نتيجة التشخيص
+    </h1>
+
+    <p style="font-family: Lemonada; color: #F00 !important" class="text-right mt-4">
+        هذا هو تشخيص مبدئي للامراض التي يحتمل ان تكون مصابا بها وعليك مراجعة الطبيب لعمل الفحوصات الطبية اللازمة
+    </p>
+    
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <h3 class="text-right pt-4 pb-4" style="font-family: Lemonada; color: #EA0016; border-top: 1px solid #EA0016; border-bottom: 1px solid #EA0016; border-left: 1px solid #EA0016 ">
+                المرض المصاب بة
+            </h3>
+
+            <div class="row form-group m-0" style="border-left: 1px solid #F00;">
+                <div class="col-12 text-right">
+                    @for (int i = 0; i < Model.Diseases.Count; i++)
+                    {
+                        <h3 style="font-family: Lemonada; color: chocolate" class="text-right mt-4">
+                            - &nbsp; @Model.Diseases[i].Name
+                        </h3>
+
+                        @if (i != Model.Diseases.Count - 1)
+                        {
+                            <p style="font-family: Lemonada;">أو</p>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <h3 class="text-right pt-4 pb-4" style="font-family: Lemonada; color: #EA0016; border-top: 1px solid #EA0016; border-bottom: 1px solid #EA0016;">
+                المرض المصاب بة
+            </h3>
+
+            <div class="col-12 text-right">
+                @if (Model.Medicines == null)
+                {
+                    <p style="font-family: Lemonada;" class="text-primary text-right mt-4">
+                        @Model.NotFoundMedicines
+                    </p>
+                }
+                else
+                {
+                    foreach (var medicine in Model.Medicines)
+                    {
+                        <p style="font-family: Lemonada;" class="text-right mt-4 font-weight-bold text-primary">
+                            - @medicine.Name
+                        </p>
+                        <span class="mr-4" style="margin-top: -20px !important; position: absolute;">
+                            @medicine.MedicineGenre.Name   &nbsp;&nbsp;|
+                            @foreach (var medicineForm in medicine.MedicineForms)
+                            {
+                                <b>@medicineForm.Name -</b>
+                            }
+                        </span>
+                        <p style="font-family: Lemonada;" class="text-right mt-5">
+                            الجرعة اليومية &nbsp; <span class="font-weight-bold">@medicine.MedicineDose</span>
+                        </p>
+
+                        <hr />
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="col-12 form-group" style="direction: rtl;">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-3">
+                        <a asp-action="Index" class="btn btn-success form-control Lemonada">رجوع</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

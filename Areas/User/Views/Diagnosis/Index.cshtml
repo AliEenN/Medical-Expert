@@ -1,0 +1,31 @@
+﻿@model DiagnosisViewModel
+
+@{
+    ViewData["Title"] = "تشخيص";
+}
+
+<div class="container whiteBackground mt-5">
+
+    <h1 style="font-family: Lemonada;" class="text-primary text-right mb-5">
+        تشخيص
+    </h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        @foreach (var category in Model.Categories)
+        {
+            <div class="col-4 mb-4">
+                <div class="card h-100">
+                    <img style="height:300px;" src="@($"data:image/*;base64,{Convert.ToBase64String(category.Picture)}")" class="card-img-top" alt="صورة القسم">
+                    <div class="card-body">
+                        <h5 class="card-title text-right Lemonada">@category.Name</h5>
+                        <div class="card-footer">
+                            <a class="btn btn-primary w-100 Lemonada" asp-action="DefineSides" asp-route-id="@category.Id">اختر</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

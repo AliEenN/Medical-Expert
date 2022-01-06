@@ -1,0 +1,98 @@
+﻿@model IEnumerable<MedicineGenreViewModel>
+
+@{
+    ViewData["Title"] = "قائمة انواع العلاج";
+}
+
+<div class="container whiteBackground mt-5">
+    <h1 style="font-family: Lemonada;" class="text-primary text-right mb-5">
+        انواع العلاج
+    </h1>
+
+    <div class="col-12 col-md-3 text-md-right mt-3">
+        <a class="btn btn-primary Lemonada" asp-action="Create">انشاء نوع علاج جديد</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-right alert alert-warning mt-4 Lemonada" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            لا يوجد انواع علاج في القائمة!
+        </div>
+    }
+    else
+    {
+        @foreach (var medicineGenre in Model)
+        {
+            <div class="deleted text-right border border-info col-12" style="margin-top:10px;margin-bottom:10px;padding:10px; direction:rtl">
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        <label class="text-primary Lemonada" style="font-size:21px;">
+                            @medicineGenre.Name
+                        </label>
+                    </div>
+
+                    <div class="col-12 col-md-4 text-left" dir="ltr">
+                        <div class="btn-group" role="group">
+                            <a href="javascript:;" class="btn btn-danger text-white js-delete" data-id="@medicineGenre.Id">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                            <a asp-action="Edit" class="btn btn-primary text-white" asp-route-id="@medicineGenre.Id">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a asp-action="Details" class="btn btn-success text-white" asp-route-id="@medicineGenre.Id">
+                                <i class="bi bi-list-ul"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+            $('.js-delete').on('click', function () {
+                var btn = $(this);
+
+                bootbox.confirm({
+                    message: "هل تود حذف هذا النوع؟",
+                    buttons: {
+                        confirm: {
+                            label: 'نعم',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'لا',
+                            className: 'btn-outline-secondary'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: '/admin/medicinegenres/delete/' + btn.data('id'),
+                                success: function () {
+                                    var medicineGenresContainer = btn.parents('.deleted');
+                                    medicineGenresContainer.addClass('animate__animated animate__zoomOut');
+
+                                    setTimeout(function () {
+                                        medicineGenresContainer.remove();
+                                    }, 1000);
+
+                                    toastr.success('تم حذف النوع بنجاح.');
+                                },
+                                error: function () {
+                                    toastr.error('حدث خطأ ما!');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

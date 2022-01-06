@@ -1,0 +1,83 @@
+﻿@model MedicineViewModel
+
+@{
+    ViewData["Title"] = "تفاصيل العلاج";
+}
+
+<h1 class="text-primary text-right mt-4 Lemonada">
+    تفاصيل العلاج
+</h1>
+
+<div class="whiteBackground container border mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="row form-group mt-4">
+                <div class="col-12 col-lg-3">
+                    <label asp-for="Name" class="col-form-label Lemonada text-primary"></label>
+                </div>
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <input disabled asp-for="Name" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-12 col-lg-3">
+                    <label class="col-form-label Lemonada text-primary">شكل العلاج</label>
+                </div>
+                <div class="col-12 col-lg-9 col-xl-7 text-right">
+                    @for (int i = 0; i < Model.MedicineForms.Count; i++)
+                    {
+                        <label class="mr-4">@Model.MedicineForms[i].Name</label>
+                    }
+                </div>
+            </div>
+
+            <div class="row form-group mt-4">
+                <div class="col-12 col-lg-3">
+                    <label asp-for="MedicineDose" class="col-form-label Lemonada text-primary"></label>
+                </div>
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <input disabled asp-for="MedicineDose" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row form-group mt-4">
+                <div class="col-12 col-lg-3">
+                    <label asp-for="MedicineGenreId" class="col-form-label Lemonada text-primary"></label>
+                </div>
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <input disabled asp-for="MedicineGenre.Name" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-12 col-lg-3">
+                    <label class="col-form-label Lemonada text-primary">الامراض التابعة للعلاج</label>
+                </div>
+                <div class="col-12 col-lg-9 col-xl-7 text-right">
+                    @foreach (var item in Model.Diseases)
+                    {
+                        <label class="mr-4">@item.Name</label>
+                    }
+                </div>
+            </div>
+
+            <div class="row form-group" style="direction: ltr;">
+                <div class="col-12 offset-2 col-lg-9 col-xl-7">
+                    <div class="row">
+                        <div class="col-6">
+                            <a asp-action="Index" class="btn btn-success form-control Lemonada">رجوع</a>
+                        </div>
+                        <div class="col-6">
+                            <a asp-action="Edit" class="btn btn-primary form-control Lemonada" asp-route-id="@Model.Id">تعديل</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

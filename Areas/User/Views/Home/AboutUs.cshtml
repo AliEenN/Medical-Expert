@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewData["Title"] = "AboutUs";
+}
+
+<div class="bodyFromAbout">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AliNasser.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Ali Nasser<br><br><span>Full Stack Developer</span></h3>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AvatarBoy.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Mostafa Mahmoud<br><br><span>UX Designer</span></h3>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AvatarBoy.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Mohamed Frag<br><br><span>UI Designer</span></h3>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AvatarBoy.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Ahmed Salah<br><br><span>UI Developer</span></h3>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AvatarGirl.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Shimaa Gamal<br><br><span>Front End Developer</span></h3>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AvatarGirl.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Sara Gamal<br><br><span>Back End Developer</span></h3>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AvatarGirl.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Samar Hossam El Din<br><br><span>Back End Developer</span></h3>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AvatarGirl.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Esra Ragab<br><br><span>Full Stack Developer</span></h3>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AvatarGirl.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Shrouk Hani<br><br><span>UI Developer</span></h3>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <div class="imgBx">
+                    <img src="~/img/AvatarGirl.jpg" />
+                </div>
+                <div class="details">
+                    <h3>Amira Saad<br><br><span>Front End Developer</span></h3>
+                </div>
+            </div>
+
+        </div>
+        <!--===   Add Pagination   ===-->
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            var swiper = new Swiper('.swiper-container', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: {
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 500,
+                    modifier: 1,
+                    slideShadows: true,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            });
+        });
+
+    </script>>
+}
